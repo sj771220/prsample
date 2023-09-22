@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.example.prsample.dao.SampleDao">
+
+    <select id="getlogininfo" resultType="com.example.prsample.dto.Working">
+        select * from working where empno=#{param1}
+
+    </select>
+
+    <select id="deptlist" resultType="com.example.prsample.dto.Dept">
+        select * from dept where deptno=#{param1}
+    </select>
+
+    <select id="chul1" resultType="String">
+        select ischul from working where empno=#{param1}
+    </select>
+
+    <update id="updateWork">
+        update working SET ischul = 'o', isworking='출근', cometime=#{param1} WHERE empno =#{param2}
+
+    </update>
+
+    <update id="updatelastday">
+        update working set lastday=#{param1} where empno=#{param2}
+    </update>
+
+    <update id="updatego">
+        update working set ischul='oo', isworking='퇴근', gotime=#{param1} where empno=#{param2}
+
+    </update>
+
+    <update id="resetworking">
+        update working set ischul='x', isworking='출근전', cometime='', gotime='' where empno=#{param1}
+
+
+    </update>
+
+    <select id="typecheck" resultType="com.example.prsample.dto.Day">
+        select * from daycheck where empno =#{param1} and month=#{param2}
+    </select>
+
+
+
+</mapper>

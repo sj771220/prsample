@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+
+
+<p th:text="${working.name+' 님의 오늘 근무 스케쥴은 '+result+' 입니다'}" ></p>
+
+<span id="text" th:text="'출근 시각 '+${working.cometime}"></span> <br> <br>
+<span id="text2" th:text="'퇴근 시각'+${working.gotime}"></span> <br> <br>
+<span id="nowtext" th:text="'현재 출근 상태:'+${working.isworking}"></span> <br> <br>
+
+<input value="출근" type="button" onclick="makecommute()">
+<input value="퇴근" type="button" onclick="quitcommute()">
+<br>
+
+<input value="초기화" type="button" onclick="reset()">
+
+<br>
+<br>
+
+<table border="1">
+
+    <thead>
+    <tr>
+        <th>이름</th>
+        <th>현황</th>
+        <th>메일</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    <!-- tr th:each : 행 반복문을 수행하겠다는 의미입니다 [여러 데이터 출력] -->
+    <tr th:each="dto : ${list}">
+        <td><span th:text="${dto.getName()}"></span></td>
+        <td><span th:text="${dto.getIsworking()}"></span></td>
+        <td>  <a th:href="@{'/mail/sendmail/' + ${dto.empno}}">메일 보내기</a> </td>
+    </tr>
+    </tbody>
+
+</table>
+
+<script src="/js/storeDataSendAjax.js"></script>
+<script th:inline="javascript">
+    var resultValue = /*[[${result}]]*/ '';
+</script>
+</body>
+</html>
