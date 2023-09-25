@@ -5,6 +5,17 @@
     <title>Title</title>
 </head>
 <body>
-<p th:text="${empno}" ></p>
+<p th:text="${empno}+'에게 메일 보내기'" ></p>
+
+
+<form action="/sendgo" method="post">
+
+    받는이<input type="text" name="empno" th:value="${empno}" th:readonly="true"> <br>
+
+    제목 <input type="text" name="title">
+    <input type="submit" value="보내기">
+
+</form>
+
 </body>
 </html>

@@ -4,6 +4,7 @@ import com.example.prsample.dto.Day;
 import com.example.prsample.dto.Dept;
 import com.example.prsample.dto.Working;
 import com.example.prsample.service.StuService;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -17,6 +18,7 @@ import java.util.Date;
 import java.util.List;
 
 @Controller
+@Slf4j
 public class CommuteController {
 
     @Autowired
@@ -34,7 +36,16 @@ public class CommuteController {
 
         return "send";
     }
-    
+
+    @PostMapping("/sendgo")
+    public String sendTest(@RequestParam("empno") int empno, @RequestParam("title") String title){
+        System.out.println("============================================");
+    log.info(title);
+        System.out.println(empno);
+        return "sendgo";
+    }
+
+
 @GetMapping("/start")
 public String startpage(Model model){
 
