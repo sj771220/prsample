@@ -24,4 +24,8 @@ public interface SampleDao {
 
     public void updatelastday(String today, int empno);
 
+    public void updaterest(int empno);
+
+    public void finishrest(int empno);
+
 }

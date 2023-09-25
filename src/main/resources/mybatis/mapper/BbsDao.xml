@@ -42,6 +42,13 @@
         select * from daycheck where empno =#{param1} and month=#{param2}
     </select>
 
+    <update id="updaterest">
+        update working set isworking='외출' where empno=#{param1}
 
+    </update>
+
+    <update id="finishrest">
+        update working set isworking='출근' where empno=#{param1}
+    </update>
 
 </mapper>

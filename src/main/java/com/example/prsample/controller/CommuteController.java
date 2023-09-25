@@ -143,6 +143,38 @@ public String startpage(Model model){
         return responseData;
     }
 
+    @PostMapping("/takearest")
+    @ResponseBody
+    public String takeaRest(){
+        int empno=22;
+        String responseData="";
+        Working working=stuService.getlogininfo(empno);
+
+        if(!working.getIsworking().equals("외출")){
+            try{
+                stuService.updaterest(empno);
+                responseData="성공";
+            } catch (Exception e){
+                responseData="오류";
+            }
+        } else if(working.getIsworking().equals("외출")){
+
+            try{
+                stuService.finishrest(empno);
+                responseData="복귀";
+            } catch (Exception e){
+                responseData="오류";
+            }
+
+        }
+
+
+
+
+
+        return responseData;
+    }
+
 
     @PostMapping("/reset")
     public void reset(){
@@ -155,12 +187,24 @@ public String startpage(Model model){
     public String quitcommute(@RequestParam("result") String resultValue){
 
         int empno=22;
+        Working working=stuService.getlogininfo(empno);
+
+
+
+
         LocalDateTime start=LocalDateTime.now();
 
         String starttime=start.toString();
         String tttime=starttime.substring(11, 16);
 
         String responseData=tttime;
+
+
+        if(working.getIsworking().equals("외출")){
+            responseData="외출";
+            return responseData;
+        }
+
 
         String ischul=stuService.ischul1(empno);
         LocalTime hometime = LocalTime.of(18, 0, 0);

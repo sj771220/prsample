@@ -19,6 +19,15 @@
 <input value="퇴근" type="button" onclick="quitcommute()">
 <br>
 
+<th:block th:if="${working.isworking} =='외출'">
+<input id="takearestbutton1" value="복귀" type="button" onclick="takearest()">
+</th:block>
+
+<th:block th:if="${working.isworking != '외출'}">
+    <input id="takearestbutton" value="외출" type="button" onclick="takearest()">
+</th:block>
+
+
 <input value="초기화" type="button" onclick="reset()">
 
 <br>

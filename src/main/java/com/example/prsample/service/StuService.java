@@ -65,5 +65,7 @@ public class StuService {
         return todayAsString;
     }
 
+    public void updaterest(int empno){sampledao.updaterest(empno);}
 
+    public void finishrest(int empno){sampledao.finishrest(empno);}
  }
