@@ -28,7 +28,12 @@ public class CommuteController {
         stuService.resetworking(empno);
     //초기화임
     }
-    
+    @GetMapping("/mail/sendmail/{empno}")
+    public String sendmail(@PathVariable int empno, Model model){
+        model.addAttribute("empno", empno);
+
+        return "send";
+    }
     
 @GetMapping("/start")
 public String startpage(Model model){
