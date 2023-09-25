@@ -142,8 +142,6 @@ public String startpage(Model model){
 
         String starttime=start.toString();
         String tttime=starttime.substring(11, 16);
-        System.out.println("================================"+tttime);
-        System.out.println(resultValue);
 
         String responseData=tttime;
 
@@ -161,10 +159,7 @@ public String startpage(Model model){
         }
 
 
-        System.out.println(time);
-        System.out.println(hometime);
         boolean canIgoHome=hometime.isBefore(time);
-        System.out.println(canIgoHome);
         if (ischul.equals("oo")){
 
             responseData="이미퇴근";
