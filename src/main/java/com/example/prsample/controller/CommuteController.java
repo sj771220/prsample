@@ -150,6 +150,12 @@ public String startpage(Model model){
         String responseData="";
         Working working=stuService.getlogininfo(empno);
 
+       if(working.getIsworking().equals("퇴근")||working.getIsworking().equals("출근전")){
+            responseData="이미";
+            return responseData;
+        }
+
+
         if(!working.getIsworking().equals("외출")){
             try{
                 stuService.updaterest(empno);

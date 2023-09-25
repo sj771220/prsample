@@ -40,6 +40,8 @@ function takearest() {
             $("#nowtext").text("현재 출근 상태: 출근");
             $("#takearestbutton").val("외출");
             $("#takearestbutton1").val("외출");
+        } else if(response==="이미"){
+            alert("출근 전, 퇴근 후에는 외출 신청이 불가능합니다.")
         }
     }).fail(function (error) {
         $("#nowtext").replaceWith(error);
