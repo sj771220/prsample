@@ -26,7 +26,7 @@
 <th:block th:if="${working.isworking != '외출'}">
     <input id="takearestbutton" value="외출" type="button" onclick="takearest()">
 </th:block>
-
+<!--같은 버튼이나 화면 온로드 당시의 근무 상황에 따라 버튼의 밸류 변경 -->
 
 <input value="초기화" type="button" onclick="reset()">
 
@@ -41,11 +41,11 @@
     </thead>
     <tbody>
     <th:block th:each="dto, iterStat : ${list}">
-        <!-- 매 세 번째 요소마다 새로운 행을 시작합니다 -->
+        <!-- 매 세 번째 요소마다 새로운 행을 시작 -->
         <th:block th:if="${iterStat.index % 3 == 0}">
             </tr><tr>
         </th:block>
-        <!-- 각 사원 정보를 셀에 출력합니다 -->
+        <!-- 각 사원 정보를 셀에 출력 -->
         <td>
             <img th:src="@{/images/__${dto.getName()}__.png}" alt="내 이미지"> <br>
             <span th:text="${dto.getName()}"></span> :
