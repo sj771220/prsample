@@ -40,7 +40,8 @@ public class CommuteController {
     @PostMapping("/sendgo")
     public String sendTest(@RequestParam("empno") int empno, @RequestParam("title") String title){
         System.out.println("============================================");
-    log.info(title);
+
+        System.out.println(title);
         System.out.println(empno);
         return "sendgo";
     }

@@ -25,25 +25,32 @@
 <br>
 
 <table border="1">
-
     <thead>
     <tr>
-        <th>이름</th>
-        <th>현황</th>
-        <th>메일</th>
+        <th colspan="3">ㅁㅁ부서</th>
     </tr>
     </thead>
-
     <tbody>
-    <!-- tr th:each : 행 반복문을 수행하겠다는 의미입니다 [여러 데이터 출력] -->
-    <tr th:each="dto : ${list}">
-        <td><span th:text="${dto.getName()}"></span></td>
-        <td><span th:text="${dto.getIsworking()}"></span></td>
-        <td>  <a th:href="@{'/mail/sendmail/' + ${dto.empno}}">메일 보내기</a> </td>
-    </tr>
+    <th:block th:each="dto, iterStat : ${list}">
+        <!-- 매 세 번째 요소마다 새로운 행을 시작합니다 -->
+        <th:block th:if="${iterStat.index % 3 == 0}">
+            </tr><tr>
+        </th:block>
+        <!-- 각 사원 정보를 셀에 출력합니다 -->
+        <td>
+            <img th:src="@{/images/__${dto.getName()}__.png}" alt="내 이미지"> <br>
+            <span th:text="${dto.getName()}"></span> :
+            <span th:text="${dto.getIsworking()}"></span><br>
+            <a th:href="@{'/mail/sendmail/' + ${dto.empno}}">
+                <img th:src="@{/images/mailicon.png}" alt="메일" width="20" height="20">
+            </a><br>
+        </td>
+    </th:block>
     </tbody>
-
 </table>
+
+
+
 
 <script src="/js/storeDataSendAjax.js"></script>
 <script th:inline="javascript">
