@@ -11,9 +11,13 @@ import java.util.List;
 public interface SampleDao {
 
     public void updateWork(String cometime,int empno);
+    public void updateWork2(int empno);
     public void updatego(String gotime,int empno);
+    public void updatego2(int empno);
+
 
     public void resetworking(int empno);
+    public void resetworking2(int empno);
     public String chul1(int empno);
 
     public Day typecheck(int empno, int month);
@@ -27,5 +31,9 @@ public interface SampleDao {
     public void updaterest(int empno);
 
     public void finishrest(int empno);
+
+    public String checkisworking(int empno);
+
+    public String checkvacation(String day,int empno);
 
 }

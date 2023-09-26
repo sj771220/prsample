@@ -1,3 +1,10 @@
+function vac(){
+    alert("휴가중엔 출근, 퇴근을 기록할 수 없습니다.")
+}
+
+
+
+
 function makecommute() {
     $.ajax({
         url: "/makecommute",

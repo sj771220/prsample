@@ -10,7 +10,6 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
-import java.sql.Timestamp;
 import java.text.SimpleDateFormat;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
@@ -25,9 +24,10 @@ public class CommuteController {
     StuService stuService;
 
     @GetMapping("/make")
-    public void makego(){
+    public String makego(){
         int empno=22;
         stuService.resetworking(empno);
+        return "send";
     //초기화임
     }
     @GetMapping("/mail/sendmail/{empno}")
@@ -62,13 +62,16 @@ public String startpage(Model model){
     Date last=working.getLastday();
     SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
     String lastday=sdf.format(last);
-
+    SimpleDateFormat sdf2 = new SimpleDateFormat("dd");
     Date toda=new Date();
     String today=sdf.format(toda);
+    String todaysday=sdf2.format(toda);
+    String newtoday="day"+todaysday;
+    String vacation= stuService.checkvacation(newtoday,empno);
 
-    System.out.println("============================");
-    System.out.println(lastday);
-    System.out.println(today);
+    System.out.println(vacation);
+
+
 
     if(!lastday.equals(today)){
         stuService.resetworking(empno);
@@ -113,6 +116,7 @@ public String startpage(Model model){
     model.addAttribute("list",list);
     model.addAttribute("result",result);
     model.addAttribute("working",working);
+    model.addAttribute("vacation",vacation);
     return "hi";
 
 }
@@ -148,22 +152,27 @@ public String startpage(Model model){
     public String takeaRest(){
         int empno=22;
         String responseData="";
-        Working working=stuService.getlogininfo(empno);
+       String  working=stuService.checkisworking(empno);
 
-       if(working.getIsworking().equals("퇴근")||working.getIsworking().equals("출근전")){
+        System.out.println(working+"======================================");
+
+
+       if(working.equals("퇴근")||working.equals("출근전")){
             responseData="이미";
             return responseData;
         }
 
 
-        if(!working.getIsworking().equals("외출")){
+        if(!working.equals("외출")){
             try{
                 stuService.updaterest(empno);
                 responseData="성공";
             } catch (Exception e){
                 responseData="오류";
             }
-        } else if(working.getIsworking().equals("외출")){
+
+
+        } else if(working.equals("외출")){
 
             try{
                 stuService.finishrest(empno);
@@ -171,12 +180,7 @@ public String startpage(Model model){
             } catch (Exception e){
                 responseData="오류";
             }
-
         }
-
-
-
-
 
         return responseData;
     }

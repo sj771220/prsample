@@ -8,6 +8,47 @@
 </head>
 <body>
 
+<th:block th:if="${vacation}=='휴가'" >
+
+    <p th:text="${working.name+' 님은 오늘 휴가 날입니다'}" ></p>
+    <span  th:text="'출근 시각 '+${working.cometime}"></span> <br> <br>
+    <span  th:text="'퇴근 시각'+${working.gotime}"></span> <br> <br>
+    <span  th:text="'현재 출근 상태:'+${working.isworking}"></span> <br> <br>
+
+    <input value="출근" type="button" onclick="vac()">
+    <input value="퇴근" type="button" onclick="vac()">
+    <br>
+    <table border="1">
+        <thead>
+        <tr>
+            <th colspan="3">ㅁㅁ부서</th>
+        </tr>
+        </thead>
+        <tbody>
+        <th:block th:each="dto, iterStat : ${list}">
+            <!-- 매 세 번째 요소마다 새로운 행을 시작 -->
+            <th:block th:if="${iterStat.index % 3 == 0}">
+                </tr><tr>
+            </th:block>
+            <!-- 각 사원 정보를 셀에 출력 -->
+            <td>
+                <img th:src="@{/images/__${dto.getName()}__.png}" alt="내 이미지"> <br>
+                <span th:text="${dto.getName()}"></span> :
+                <span th:text="${dto.getIsworking()}"></span><br>
+                <a th:href="@{'/mail/sendmail/' + ${dto.empno}}">
+                    <img th:src="@{/images/mailicon.png}" alt="메일" width="20" height="20">
+                </a><br>
+            </td>
+        </th:block>
+        </tbody>
+    </table>
+
+</th:if>
+</th:block>
+
+
+
+<th:block th:if="${vacation}!='휴가'" >
 
 <p th:text="${working.name+' 님의 오늘 근무 스케쥴은 '+result+' 입니다'}" ></p>
 
@@ -33,37 +74,41 @@
 <br>
 <br>
 
-<table border="1">
-    <thead>
-    <tr>
-        <th colspan="3">ㅁㅁ부서</th>
-    </tr>
-    </thead>
-    <tbody>
-    <th:block th:each="dto, iterStat : ${list}">
-        <!-- 매 세 번째 요소마다 새로운 행을 시작 -->
-        <th:block th:if="${iterStat.index % 3 == 0}">
-            </tr><tr>
+    <table border="1">
+        <thead>
+        <tr>
+            <th colspan="3">ㅁㅁ부서</th>
+        </tr>
+        </thead>
+        <tbody>
+        <th:block th:each="dto, iterStat : ${list}">
+            <!-- 매 세 번째 요소마다 새로운 행을 시작 -->
+            <th:block th:if="${iterStat.index % 3 == 0}">
+                </tr><tr>
+            </th:block>
+            <!-- 각 사원 정보를 셀에 출력 -->
+            <td>
+                <img th:src="@{/images/__${dto.getName()}__.png}" alt="내 이미지"> <br>
+                <span th:text="${dto.getName()}"></span> :
+                <span th:text="${dto.getIsworking()}"></span><br>
+                <a th:href="@{'/mail/sendmail/' + ${dto.empno}}">
+                    <img th:src="@{/images/mailicon.png}" alt="메일" width="20" height="20">
+                </a><br>
+            </td>
         </th:block>
-        <!-- 각 사원 정보를 셀에 출력 -->
-        <td>
-            <img th:src="@{/images/__${dto.getName()}__.png}" alt="내 이미지"> <br>
-            <span th:text="${dto.getName()}"></span> :
-            <span th:text="${dto.getIsworking()}"></span><br>
-            <a th:href="@{'/mail/sendmail/' + ${dto.empno}}">
-                <img th:src="@{/images/mailicon.png}" alt="메일" width="20" height="20">
-            </a><br>
-        </td>
-    </th:block>
-    </tbody>
-</table>
+        </tbody>
+    </table>
 
 
+    </th:if>
+</th:block>
 
 
 <script src="/js/storeDataSendAjax.js"></script>
 <script th:inline="javascript">
     var resultValue = /*[[${result}]]*/ '';
+
+    // 이거 윗줄 회색글씨 절대 지우면 안됨
 </script>
 </body>
 </html>

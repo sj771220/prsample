@@ -31,10 +31,12 @@ public class StuService {
 
     public void updateWork(String cometime,int empno){
         sampledao.updateWork(cometime,empno);
+        sampledao.updateWork2(empno);
     }
 
     public void updatego(String gotime, int empno){
         sampledao.updatego(gotime,empno);
+        sampledao.updatego2(empno);
     }
 
 
@@ -48,6 +50,7 @@ public class StuService {
 
     public void resetworking(int empno){
         sampledao.resetworking(empno);
+        sampledao.resetworking2(empno);
     }
 
     public List<Dept> deptlist(int deptno){ return sampledao.deptlist(deptno); }
@@ -68,4 +71,12 @@ public class StuService {
     public void updaterest(int empno){sampledao.updaterest(empno);}
 
     public void finishrest(int empno){sampledao.finishrest(empno);}
+
+    public String checkisworking(int empno){
+        return sampledao.checkisworking(empno);
+    }
+
+    public String checkvacation(String day,int empno){
+        return sampledao.checkvacation(day,empno);
+    }
  }
