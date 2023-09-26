@@ -6,7 +6,7 @@
 <mapper namespace="com.example.prsample.dao.SampleDao">
 
     <select id="getlogininfo" resultType="com.example.prsample.dto.Working">
-        SELECT d.isworking, w.empno, w.ischul, w.name, w.cometime, w.gotime, w.lastday
+        SELECT d.isworking, w.empno, w.ischul, d.name, w.cometime, w.gotime, w.lastday
         FROM dept d
                  JOIN working w ON d.empno = w.empno
         WHERE d.empno = #{param1};
@@ -71,6 +71,11 @@
     <select id="checkisworking" resultType="String">
         select isworking from dept where empno= #{param1}
     </select>
+
+    <update id="updatevacation">
+    update dept set isworking='휴가' where empno=#{param1}
+ </update>
+
 
     <select id="checkvacation" resultType="String">
         <choose>

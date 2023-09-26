@@ -79,4 +79,9 @@ public class StuService {
     public String checkvacation(String day,int empno){
         return sampledao.checkvacation(day,empno);
     }
+
+    public void updatevacation(int empno){
+        sampledao.updatevacation(empno);
+    }
+
  }

@@ -36,4 +36,6 @@ public interface SampleDao {
 
     public String checkvacation(String day,int empno);
 
+    public void updatevacation(int empno);
+
 }

@@ -11,6 +11,7 @@
 <th:block th:if="${vacation}=='휴가'" >
 
     <p th:text="${working.name+' 님은 오늘 휴가 날입니다'}" ></p>
+    <img th:src="@{/images/__${working.getName()}__.png}" alt="내 이미지"> <br> <br>
     <span  th:text="'출근 시각 '+${working.cometime}"></span> <br> <br>
     <span  th:text="'퇴근 시각'+${working.gotime}"></span> <br> <br>
     <span  th:text="'현재 출근 상태:'+${working.isworking}"></span> <br> <br>
@@ -21,7 +22,7 @@
     <table border="1">
         <thead>
         <tr>
-            <th colspan="3">ㅁㅁ부서</th>
+            <th colspan="3"> <span th:text="${deptname}"></span> </th>
         </tr>
         </thead>
         <tbody>
@@ -50,8 +51,11 @@
 
 <th:block th:if="${vacation}!='휴가'" >
 
-<p th:text="${working.name+' 님의 오늘 근무 스케쥴은 '+result+' 입니다'}" ></p>
+    <table border="1">
+<td>
 
+<p th:text="${working.name+' 님의 오늘 근무 스케쥴은 '+result+' 입니다'}" ></p>
+    <img th:src="@{/images/__${working.getName()}__.png}" alt="내 이미지"> <br> <br>
 <span id="text" th:text="'출근 시각 '+${working.cometime}"></span> <br> <br>
 <span id="text2" th:text="'퇴근 시각'+${working.gotime}"></span> <br> <br>
 <span id="nowtext" th:text="'현재 출근 상태:'+${working.isworking}"></span> <br> <br>
@@ -70,14 +74,15 @@
 <!--같은 버튼이나 화면 온로드 당시의 근무 상황에 따라 버튼의 밸류 변경 -->
 
 <input value="초기화" type="button" onclick="reset()">
-
+</td>
+    </table>
 <br>
 <br>
 
     <table border="1">
         <thead>
         <tr>
-            <th colspan="3">ㅁㅁ부서</th>
+            <th colspan="3"><span th:text="${deptname}"></span></th>
         </tr>
         </thead>
         <tbody>
