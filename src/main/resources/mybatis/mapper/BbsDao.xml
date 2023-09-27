@@ -76,6 +76,10 @@
     update dept set isworking='휴가' where empno=#{param1}
  </update>
 
+    <select id="getAuthority" resultType="String">
+        select authority from emp where empno= #{param1}
+    </select>
+
 
     <select id="checkvacation" resultType="String">
         <choose>

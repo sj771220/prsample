@@ -26,7 +26,7 @@ public class CommuteController {
 
     @GetMapping("/make")
     public String makego(){
-        int empno=22;
+        int empno=25;
         stuService.resetworking(empno);
         return "send";
     //초기화임
@@ -62,7 +62,7 @@ public String startpage(Model model){
     // 정상 근무라면 아래 코드를 그대로 띄워주고 반차면 4시간으로 줄인 switch & case 돌리기. ,휴가 or 공휴일이면 session에 setssion으로 
     //오늘 근뮤 형태를 넣어줌. 모든 페이지에선 th:if로 세션의 오늘 근무 형태를 따라 내용을 시작하면 될 듯
 
-    int empno=22;  //세션에서 가져올 사원 번호
+    int empno=25;  //세션에서 가져올 사원 번호
     int deptno=1100; //마찬가지로 부서 번호 
     Working working=stuService.getlogininfo(empno);  //오늘의 근무 상태를 일단 가져옴 empno로 
     Date last=working.getLastday(); //근무 상태에 있는 마지막으로 로그인 한 날을조회 
@@ -84,15 +84,20 @@ public String startpage(Model model){
     
     
     String newtoday="day"+todaysday;
-    String vacation= stuService.checkvacation(newtoday,empno);
     //휴가 여부 조회
+    String vacation="";
 
 
-    System.out.println(vacation);
 
-    if(vacation.equals("휴가")){
-        stuService.updatevacation(empno);
+    try{
+        vacation= stuService.checkvacation(newtoday,empno);
+        if(vacation.equals("휴가")){
+            stuService.updatevacation(empno);
+        }
+    } catch (Exception e){
+
     }
+
     //만약 오늘이 한 달 스케쥴 테이블에 기록된 휴가 날이라면 vacation update로 dept와 working 테이블에 휴가 정보를 업데이트함 
 
 
@@ -163,7 +168,7 @@ public String startpage(Model model){
         //출근 버튼 누르면 출근을 기록하기 위함
         
         
-        int empno=22;
+        int empno=25;
         LocalDateTime start=LocalDateTime.now();
         String starttime=start.toString();
         String tttime=starttime.substring(11, 16);
@@ -196,7 +201,7 @@ public String startpage(Model model){
         
         //외출신청
         
-        int empno=22;
+        int empno=25;
         String responseData="";
        String  working=stuService.checkisworking(empno);
         //현재 근무 정보를 받아옴
@@ -235,7 +240,7 @@ public String startpage(Model model){
 
     @PostMapping("/reset")
     public void reset(){
-        int empno=22;
+        int empno=25;
         stuService.resetworking(empno);
         //초기화 버튼에서 돌아가는 초기화
         
@@ -245,7 +250,7 @@ public String startpage(Model model){
     @ResponseBody
     public String quitcommute(@RequestParam("result") String resultValue){
 
-        int empno=22;
+        int empno=25;
         Working working=stuService.getlogininfo(empno);
 
         //퇴근임
@@ -298,6 +303,17 @@ public String startpage(Model model){
 
         return responseData;
 
+    }
+
+
+    @GetMapping("/mypage")
+    public String mypage(Model model){
+        int empno=22;
+
+        String authority=stuService.getAuthority(empno);
+
+        model.addAttribute("authority",authority);
+        return "mypage";
     }
 
 

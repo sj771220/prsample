@@ -84,4 +84,6 @@ public class StuService {
         sampledao.updatevacation(empno);
     }
 
+    public String getAuthority(int empno) {return sampledao.getAuthority(empno); }
+
  }

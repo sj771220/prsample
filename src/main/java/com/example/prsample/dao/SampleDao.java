@@ -38,4 +38,6 @@ public interface SampleDao {
 
     public void updatevacation(int empno);
 
+    public String getAuthority(int empno);
+
 }
