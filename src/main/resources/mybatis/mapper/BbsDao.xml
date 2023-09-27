@@ -47,7 +47,7 @@
 
 
     <update id="resetworking">
-        update working set ischul='x', cometime='', gotime='' where empno=#{param1}
+        update working set ischul='x', cometime='', gotime='', where empno=#{param1}
 
     </update>
 
@@ -80,6 +80,34 @@
         select authority from emp where empno= #{param1}
     </select>
 
+    <update id="updatetardy">
+    update working set tardy='o' where empno=#{param1}
+
+    </update>
+
+    <update id="checktardy">
+        UPDATE monthresult SET tardy = tardy + 1 WHERE empno = #{param1} and month=#{param2}
+    </update>
+
+    <update id="updateworktime">
+        update monthresult set worktime=work+8 where empno= #{param1} and month=#{param2}
+    </update>
+
+    <update id="updateworkself">
+        update monthresult set worktime=work+#{param1} where empno=#{param2} and month=#{param3}
+    </update>
+
+    <select id="istardytoday" resultType="String">
+        select tardy from working where empno=#{param1}
+    </select>
+
+    <select id="isextratoday" resultType="String">
+        select extrawork from working where empno=#{param1}
+    </select>
+
+    <update id="updateextrawork">
+        update monthresult set extraworktime=extraworktime+ #{param1} where empno=#{param2} and month=#{param3}
+    </update>
 
     <select id="checkvacation" resultType="String">
         <choose>

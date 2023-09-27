@@ -57,10 +57,6 @@ public class CommuteController {
 public String startpage(Model model){
 
 
-    //이 컨트롤러는 로그인 직후 페이지를 상정. empno는 session에서 사번을 가져올거고
-    //해당 사번으로 db에서 일정을 조회하여 오늘의 근무 형태를 검색할 것임. ex > 정상근무 or 반차 or 휴가 or 공휴일 등 
-    // 정상 근무라면 아래 코드를 그대로 띄워주고 반차면 4시간으로 줄인 switch & case 돌리기. ,휴가 or 공휴일이면 session에 setssion으로 
-    //오늘 근뮤 형태를 넣어줌. 모든 페이지에선 th:if로 세션의 오늘 근무 형태를 따라 내용을 시작하면 될 듯
 
     int empno=25;  //세션에서 가져올 사원 번호
     int deptno=1100; //마찬가지로 부서 번호 
@@ -178,8 +174,51 @@ public String startpage(Model model){
         
         String ischul=stuService.ischul1(empno);
         //오늘의 중복 출근 여부를 찾음
-        
-        
+
+
+        String doweek=stuService.getdoweek();
+        //오늘이 무슨 요일인지 받아옴
+
+        String result="";
+        int month=9;
+        Day day=stuService.typecheck(empno,month);
+
+        //오늘 받아온 요일을 9월 스케쥴표에서 검색해서 오늘이 어떤 근무형태인지 switch case로 결정함
+
+        int type=0; //디폴트값
+
+        switch (doweek){
+            case "월요일": type=day.get월요일();
+                break;
+            case "화요일": type=day.get화요일();
+                break;
+            case "수요일": type=day.get수요일();
+                break;
+            case "목요일": type=day.get목요일();
+                break;
+            case "금요일": type=day.get금요일();
+                break;
+        }
+
+
+        LocalTime hometime = LocalTime.of(18, 0, 0);
+
+        if(type==1){
+            hometime=LocalTime.of(17,0,0);
+        } else if (type==2) {
+            hometime=LocalTime.of(18,0,0);
+        } else if (type==3) {
+            hometime=LocalTime.of(19,0,0);
+        }
+
+        LocalDateTime now = LocalDateTime.now();
+        LocalTime time = now.toLocalTime();
+
+        if(time.isBefore(hometime)){
+            stuService.updatetardy(empno,month);
+        } //요일에서 출근 시간 받아오고 출근 눌렀을 때의 시간이 출근 시간보다 늦으면 지각 체크
+
+
         if (ischul.equals("o")||ischul.equals("oo")){
 
             responseData="이미출근";
@@ -252,7 +291,7 @@ public String startpage(Model model){
 
         int empno=25;
         Working working=stuService.getlogininfo(empno);
-
+        int month=LocalDateTime.now().getMonthValue();
         //퇴근임
 
 
@@ -298,6 +337,38 @@ public String startpage(Model model){
         } else if (!canIgoHome) {
             responseData="아직못감";
         } else {
+            String tardy=stuService.istardytoday(empno);
+
+            if(working.getExtrawork().equals("o")){
+                int nowtime=time.getHour();
+                int homeHour = hometime.getHour();
+                int extraworktime=nowtime-homeHour;
+
+                stuService.updateextrawork(extraworktime,empno,month);
+
+            }
+
+
+
+
+            if(!tardy.equals("o")){
+                stuService.updateworktime(empno,month);
+            } else if(tardy.equals("o")){
+                String commutetimestr=working.getCometime();
+                LocalTime commutetime=LocalTime.parse(commutetimestr);
+                // 시간 정보를 int로 추출
+                int commuteHour = commutetime.getHour();
+                int homeHour = hometime.getHour();
+
+                // 두 시간 값의 차 계산
+                int hourDifference = homeHour - commuteHour;
+                if(hourDifference>8){
+                    hourDifference=8;
+                }
+                stuService.updateworkself(hourDifference,empno,month);
+            } //해당 if문은 지각을 하지 않았으면 8시간을 근무 기록 하고 오늘 지각을 했으면 퇴근시간-출근시간으로 실제 근무 시간만을 기록함. 
+            //지각하고 8시간 넘게 일해도 8시간만 기록됨
+            //지각한 날은 연장 근무 기록이 불가능 하게 해둠.
             stuService.updatego(tttime,empno);
         }
 

@@ -86,4 +86,12 @@ public class StuService {
 
     public String getAuthority(int empno) {return sampledao.getAuthority(empno); }
 
+    public void updatetardy(int empno,int month) {sampledao.updatetardy(empno); sampledao.checktardy(empno,month); }
+
+    public void updateworktime(int empno,int month){sampledao.updateworktime(empno,month);}
+
+    public void updateworkself(int worktime,int empno,int month){sampledao.updateworkself(worktime,empno,month);}
+
+    public String istardytoday(int empno){return sampledao.istardytoday(empno);}
+    public void updateextrawork(int extratime,int empno, int month){sampledao.updateextrawork(extratime,empno,month);}
  }

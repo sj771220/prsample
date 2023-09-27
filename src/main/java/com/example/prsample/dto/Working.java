@@ -18,4 +18,6 @@ public class Working {
     private String cometime;
     private String gotime;
     private Date lastday;
+    private String tardy;
+    private String extrawork;
 }

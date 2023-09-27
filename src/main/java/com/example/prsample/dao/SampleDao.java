@@ -40,4 +40,15 @@ public interface SampleDao {
 
     public String getAuthority(int empno);
 
+    public void updatetardy(int empno);
+
+    public void checktardy(int empno,int month);
+
+    public void updateworktime(int empno,int month);
+
+    public void updateworkself(int worktime,int empno,int month);
+
+    public String istardytoday(int empno);
+
+    public void updateextrawork(int extratime,int empno, int month);
 }
